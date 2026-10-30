@@ -2,7 +2,7 @@
 
 Site + **cardápio digital em forma de livro** + painel do dono, para restaurantes e cafés. Um projeto Firebase por restaurante; muda-se só `public/restaurante.js`.
 
-**Demonstração (restaurante fictício "Brasa & Alecrim"):** https://joaoantunesss.github.io/Template-Restaurant/ · [cardápio](https://joaoantunesss.github.io/Template-Restaurant/menu.html) · [painel](https://joaoantunesss.github.io/Template-Restaurant/admin.html)
+**Demonstração (restaurante fictício "Brasa & Alecrim"):** https://joaoantunesss.github.io/Template-Restaurant/ · [cardápio](https://joaoantunesss.github.io/Template-Restaurant/public/menu.html) · [painel](https://joaoantunesss.github.io/Template-Restaurant/public/admin.html)
 
 <p><img src="docs/cardapio-telemovel.png" width="70%"></p>
 <p><img src="docs/cardapio-computador.png" width="49%"> <img src="docs/capas.png" width="49%"></p>
