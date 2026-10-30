@@ -1,0 +1,11 @@
+{
+  "name": "Cardápio",
+  "short_name": "Cardápio",
+  "start_url": "menu.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#1c1410",
+  "theme_color": "#1c1410",
+  "icons": [{ "src": "img/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
