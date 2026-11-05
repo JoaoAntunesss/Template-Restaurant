@@ -44,3 +44,6 @@ Com o painel e o cardápio abertos em dois separadores, o que muda no painel apa
 - Cardápio em inglês (e outras línguas), com botão para mudar.
 - Reservas online com escolha de dia e hora (o sistema de marcações do template dos salões serve de base).
 - Estatísticas: quantas vezes o cardápio foi aberto, por mesa e por hora.
+
+## Suporte do cliente
+Ao entregar, preenche `suporteUrl` em `public/restaurante.js` com `https://joaoantunesss.github.io/aw/#suporte?site=NOME-DO-SITE`. O painel passa a ter o botão "Pedir suporte" e o pedido chega ao teu painel de Gestão.
