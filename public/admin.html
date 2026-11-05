@@ -229,6 +229,7 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
   $('lPass').onkeydown = e => { if (e.key === 'Enter') $('bLogin').click(); };
   $('bGoogle').onclick = () => { if (A.DEMO) return A.auth.signInWithPopup(); A.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => $('lerr').textContent = 'Não foi possível entrar (' + ((e && e.code) || 'erro') + ').'); };
   $('bSair').onclick = () => A.auth.signOut();
+  if (R.suporteUrl) { const b = $('bSair'); b.insertAdjacentHTML('beforebegin', `<a class="btn" href="${esc(R.suporteUrl)}" target="_blank" rel="noopener">Pedir suporte</a>`); }
   $('reset').onclick = () => { if (confirm('Repor o cardápio de exemplo? Perde as alterações feitas na demonstração.')) { A.db.reset(); } };
 
   // ---------- separadores ----------

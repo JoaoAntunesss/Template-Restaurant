@@ -26,6 +26,9 @@ window.REST = {
   // Capa do cardápio (pode ser mudada no painel): "couro", "madeira", "ardosia" ou "linho"
   capa: { estilo: "couro", cor: "#5b3a24", gravacao: "dourado" },   // gravacao: "dourado", "prata" ou "relevo"
 
+  // Botão "Pedir suporte" no painel. Ao entregar: "https://joaoantunesss.github.io/aw/#suporte?site=NOME-DO-SITE"
+  suporteUrl: "",
+
   creditos: { texto: "Site por João Antunes", email: "j.p.r.n.antunes@gmail.com" },
 
   // Firebase: deixe apiKey vazio para o MODO DEMONSTRAÇÃO (tudo fica só no navegador)
