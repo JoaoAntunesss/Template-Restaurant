@@ -27,7 +27,7 @@ window.REST = {
   capa: { estilo: "couro", cor: "#5b3a24", gravacao: "dourado" },   // gravacao: "dourado", "prata" ou "relevo"
 
   // Botão "Pedir suporte" no painel. Ao entregar: "https://joaoantunesss.github.io/aw/#suporte?site=NOME-DO-SITE"
-  suporteUrl: "",
+  suporteUrl: "https://joaoantunesss.github.io/aw/#suporte",
 
   creditos: { texto: "Site por João Antunes", email: "j.p.r.n.antunes@gmail.com" },
 
