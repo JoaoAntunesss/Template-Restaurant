@@ -34,6 +34,8 @@ Com o painel e o cardápio abertos em dois separadores, o que muda no painel apa
 8. Painel → **Códigos QR**: gere os cartões das mesas e imprima. O endereço é `https://<domínio>/menu`, por isso **os QR nunca precisam de ser reimpressos** quando o cardápio muda.
 
 ## Notas
+- **Privacidade (RGPD):** `public/privacidade.html` é gerada a partir de `restaurante.js > rgpd` (responsável, NIF, email, morada). Preencha ao entregar. Como o site não recolhe dados dos visitantes (as reservas são por telefone/WhatsApp), não precisa de caixa de consentimento nem de aviso de cookies.
+- **Letras no próprio site:** `public/fonts/` tem as fontes (Cormorant Garamond e Lato). Não há pedidos ao Google Fonts, por isso o endereço IP dos visitantes não é enviado a esse serviço. Se mudar de letra, ponha os ficheiros `.woff2` nessa pasta e acerte `fonts/fonts.css`.
 - **Ecrã inteiro:** os navegadores só deixam entrar em ecrã inteiro depois de um toque. O cardápio pede-o no primeiro toque (ao abrir a capa) e tem um botão para isso. No iPhone o Safari não permite ecrã inteiro numa página; o cardápio já ocupa o ecrã todo e, se o cliente o adicionar ao ecrã principal, abre sem barras.
 - **Fotos dos pratos:** são reduzidas no próprio telemóvel do dono (até 480 px) antes de gravar, para o cardápio abrir depressa. São opcionais: um cardápio clássico fica bonito só com texto.
 - **Alergénios:** os 14 da lista oficial da UE, numerados. A legenda vai numa página no fim do cardápio.

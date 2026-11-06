@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Política de privacidade</title>
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="restaurante.js"></script>
+<style>
+:root{--bg:#f6f0e6;--ink:#2b1d14;--accent:#8c3f1d;--muted:#6b5a4d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.7 'Lato',system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:44rem;margin:0 auto;padding:clamp(1.2rem,5vw,3rem) 16px 5rem}
+a{color:var(--accent)}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,6vw,3rem);line-height:1.05;margin:.5rem 0 .3rem;color:var(--accent)}
+h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.45rem;margin:2rem 0 .2rem}
+p,li{margin:.4rem 0}ul{padding-left:1.2rem}
+.back{display:inline-block;font-weight:700;text-decoration:none;margin-bottom:.8rem}
+.meta{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script>
+(function () {
+  const R = window.REST || {}, G = R.rgpd || {}, C = R.cores || {};
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const st = document.documentElement.style;
+  if (C.fundo) st.setProperty('--bg', C.fundo); if (C.texto) st.setProperty('--ink', C.texto); if (C.destaqueEscuro) st.setProperty('--accent', C.destaqueEscuro);
+  const nome = G.responsavel || R.nome || 'o restaurante';
+  const morada = G.morada || (R.morada || []).join(', ');
+  const contacto = [G.email || R.email, R.telefone].filter(Boolean).map(esc).join(' · ');
+  const prestador = G.prestador || 'João Antunes (AW)';
+  document.title = 'Política de privacidade · ' + (R.nome || '');
+  document.getElementById('m').innerHTML = `
+  <a class="back" href="./">← Voltar ao site</a>
+  <h1>Política de privacidade</h1>
+  <p class="meta">${esc(R.nome || '')} · atualizada em ${esc(G.atualizado || 'novembro de 2026')}</p>
+  <p>Este site mostra o cardápio e a informação do restaurante. Não tem formulários nem pede os seus dados pessoais.</p>
+
+  <h2>Quem é o responsável</h2>
+  <p><strong>${esc(nome)}</strong>${G.nif ? ', NIF ' + esc(G.nif) : ''}${morada ? ', ' + esc(morada) : ''}.${contacto ? '<br>Contacto: ' + contacto + '.' : ''}</p>
+
+  <h2>Reservas e contactos</h2>
+  <p>As reservas fazem-se por telefone ou por WhatsApp, usando a sua própria aplicação. O site só abre a chamada ou a conversa, e não guarda o seu número. A conversa fica no WhatsApp, que tem a sua própria política de privacidade.</p>
+
+  <h2>O que acontece quando visita o site</h2>
+  <p>Para mostrar o cardápio, o seu navegador liga-se à plataforma Google Firebase, onde o cardápio está guardado. Como em qualquer ligação à internet, o endereço IP do seu dispositivo é visto por esse serviço, o que é necessário para o site funcionar. As letras do site estão no próprio site, sem pedidos a serviços de terceiros.</p>
+
+  <h2>Cookies e armazenamento no seu dispositivo</h2>
+  <p>Este site não usa cookies de publicidade nem de rastreio, e não tem estatísticas de visitas. Usa apenas o armazenamento do navegador para funcionar (por exemplo, para a área reservada do restaurante).</p>
+
+  <h2>Área reservada (só para o restaurante)</h2>
+  <p>Quem gere o cardápio entra com um email e uma palavra-passe. Esses dados ficam na plataforma Google Firebase e servem só para proteger a edição do cardápio.</p>
+
+  <h2>Quem mantém o site</h2>
+  <p>O site é mantido por ${esc(prestador)}, que trata a parte técnica em nome de ${esc(nome)}. A plataforma Google Firebase pode tratar dados fora do Espaço Económico Europeu, com garantias legais, como as cláusulas contratuais-tipo.</p>
+
+  <h2>Os seus direitos</h2>
+  <p>Pode pedir acesso, retificação, apagamento, limitação, oposição e portabilidade de quaisquer dados seus, contactando ${esc(nome)}. Se achar que o tratamento viola a lei, pode apresentar reclamação à Comissão Nacional de Proteção de Dados (<a href="https://www.cnpd.pt" target="_blank" rel="noopener">cnpd.pt</a>).</p>
+  `;
+})();
+</script>
+</body>
+</html>
