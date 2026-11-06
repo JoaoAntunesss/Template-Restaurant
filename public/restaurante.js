@@ -29,6 +29,9 @@ window.REST = {
   // Botão "Pedir suporte" no painel. Ao entregar: "https://joaoantunesss.github.io/aw/#suporte?site=NOME-DO-SITE"
   suporteUrl: "https://joaoantunesss.github.io/aw/#suporte",
 
+  // Política de privacidade (privacidade.html): dados do responsável. Preencher ao entregar.
+  rgpd: { responsavel: "", nif: "", email: "", morada: "", prestador: "João Antunes (AW)", atualizado: "novembro de 2026" },
+
   creditos: { texto: "Site por João Antunes", email: "j.p.r.n.antunes@gmail.com" },
 
   // Firebase: deixe apiKey vazio para o MODO DEMONSTRAÇÃO (tudo fica só no navegador)
