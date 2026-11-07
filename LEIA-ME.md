@@ -5,10 +5,10 @@ Três páginas num só projeto Firebase por restaurante:
 | Página | Para quem | O que faz |
 |---|---|---|
 | `index.html` | clientes | Site do restaurante: prato do dia, sugestões do chef, cardápio, horário, morada e reservas por telefone/WhatsApp |
-| `menu.html` (ou `/menu`) | clientes, pelo QR da mesa | Cardápio em forma de livro: capa de couro, madeira, ardósia ou linho com o nome e o logótipo gravados; as páginas viram seguindo o dedo; abre em ecrã inteiro no telemóvel |
-| `admin.html` (ou `/admin`) | dono | Pratos, preços, fotos, alergénios, esgotados, prato do dia, aviso, aspeto da capa e cartões QR para imprimir |
+| `menu.html` (ou `/menu`) | clientes, pelo QR da mesa | Cardápio em forma de livro: capa de couro, madeira, ardósia ou linho com o nome e o logótipo gravados; as páginas viram seguindo o dedo; abre em ecrã inteiro no telemóvel. Pelo QR da mesa, o cliente faz o pedido, vê o que a mesa já pediu e pode chamar o empregado ou pedir a conta |
+| `admin.html` (ou `/admin`) | dono e equipa | Pedidos de cada mesa em tempo real (com aviso sonoro), pratos, preços, fotos, alergénios, esgotados, prato do dia, aviso, aspeto da capa, mesas e cartões QR para imprimir |
 
-Não liga a nenhum sistema da cozinha nem de faturação: é só o cardápio e o site.
+Não liga ao programa de faturação: a conta e a fatura continuam a ser feitas no sistema certificado do restaurante, como sempre.
 
 ## Ver a demonstração (sem Firebase)
 Com `firebase.apiKey` vazio em `restaurante.js`, tudo corre em **modo demonstração** (restaurante fictício "Brasa & Alecrim", dados só no navegador):
@@ -31,10 +31,21 @@ Com o painel e o cardápio abertos em dois separadores, o que muda no painel apa
 5. Em Authentication crie a conta do dono. Copie o **UID** e, na Realtime Database, crie `admins / <UID> = true` (o próprio painel mostra o UID se a conta ainda não tiver acesso).
 6. `firebase deploy --only hosting,database`
 7. Na primeira entrada no painel, o cardápio de `restaurante.js` é copiado para a base de dados. A partir daí muda-se tudo no painel.
-8. Painel → **Códigos QR**: gere os cartões das mesas e imprima. O endereço é `https://<domínio>/menu`, por isso **os QR nunca precisam de ser reimpressos** quando o cardápio muda.
+8. Painel → **Mesas e QR**: escolha quantas mesas quer, carregue em **Adicionar mesas** e imprima os cartões. Os QR **nunca precisam de ser reimpressos** quando o cardápio muda.
+
+## Pedidos pela mesa (QR por mesa)
+**Como explicar ao cliente:** cada mesa tem um QR com o seu número. O cliente aponta a câmara, vê o cardápio e faz o pedido ali mesmo; o pedido aparece logo no painel, na mesa certa, com um aviso sonoro. No fim, quando a conta é paga, carrega-se em **Conta paga · limpar mesa** e a mesa fica livre para os clientes seguintes.
+
+- **Mesas:** em *Mesas e QR* criam-se quantas forem precisas (a numeração continua sozinha), muda-se o nome ("Esplanada 3") e imprimem-se os cartões. **Testar** abre o cardápio dessa mesa.
+- **Painel → Pedidos:** cada mesa mostra se está livre, quantos pedidos tem, o total e se há pedidos por ver. Ao abrir a mesa vê-se cada pedido com a hora, as quantidades, as notas ("sem cebola") e o total. Há **Marcar como visto**, **Atendido** (quando chamam o empregado ou pedem a conta) e **Conta paga · limpar mesa** (pede confirmação).
+- **No telemóvel do cliente:** o **+** junto a cada prato junta-o ao pedido; o botão da mesa (canto de cima) mostra o pedido, permite mudar quantidades, escrever uma nota e enviar. Em *Pedidos da mesa* vê o que já foi pedido e o total, e pode **Chamar o empregado** ou **Pedir a conta**.
+- **Ligar/desligar:** *Aceitar pedidos pelo QR da mesa* no separador Pedidos. Desligado, o QR mostra só o cardápio.
+- **Segurança:** cada mesa tem um código secreto no QR. Sem ele não se consegue pedir para essa mesa nem ver os pedidos dela. Os clientes só conseguem **criar** pedidos (não alteram nem apagam), só com pratos que existem no cardápio, e o total é sempre calculado com os preços do cardápio. Se alguém andar a fazer pedidos de fora (por exemplo com uma foto do QR), **Novo código** troca o código dessa mesa; o cartão antigo deixa de funcionar e imprime-se um novo.
+- **Dados pessoais:** os pedidos não levam nome, telefone nem email do cliente, só os pratos e a nota. Ao limpar a mesa os pedidos são apagados.
+- **Regras:** `database.rules.json` (publicar com `firebase deploy --only database`).
 
 ## Notas
-- **Privacidade (RGPD):** `public/privacidade.html` é gerada a partir de `restaurante.js > rgpd` (responsável, NIF, email, morada). Preencha ao entregar. Como o site não recolhe dados dos visitantes (as reservas são por telefone/WhatsApp), não precisa de caixa de consentimento. Tem um aviso de cookies informativo (`public/aviso.js`, no site e no cardápio) que aparece uma vez e lembra a escolha. Se um dia juntar estatísticas ou outro serviço que use cookies, o aviso passa a ter de pedir consentimento a sério.
+- **Privacidade (RGPD):** `public/privacidade.html` é gerada a partir de `restaurante.js > rgpd` (responsável, NIF, email, morada). Preencha ao entregar. Como o site não recolhe dados pessoais dos visitantes (as reservas são por telefone/WhatsApp e os pedidos pela mesa só levam os pratos e a nota), não precisa de caixa de consentimento. Tem um aviso de cookies informativo (`public/aviso.js`, no site e no cardápio) que aparece uma vez e lembra a escolha. Se um dia juntar estatísticas ou outro serviço que use cookies, o aviso passa a ter de pedir consentimento a sério.
 - **Letras no próprio site:** `public/fonts/` tem as fontes (Cormorant Garamond e Lato). Não há pedidos ao Google Fonts, por isso o endereço IP dos visitantes não é enviado a esse serviço. Se mudar de letra, ponha os ficheiros `.woff2` nessa pasta e acerte `fonts/fonts.css`.
 - **Ecrã inteiro:** os navegadores só deixam entrar em ecrã inteiro depois de um toque. O cardápio pede-o no primeiro toque (ao abrir a capa) e tem um botão para isso. No iPhone o Safari não permite ecrã inteiro numa página; o cardápio já ocupa o ecrã todo e, se o cliente o adicionar ao ecrã principal, abre sem barras.
 - **Fotos dos pratos:** são reduzidas no próprio telemóvel do dono (até 480 px) antes de gravar, para o cardápio abrir depressa. São opcionais: um cardápio clássico fica bonito só com texto.

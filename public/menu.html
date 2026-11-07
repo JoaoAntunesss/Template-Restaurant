@@ -2,7 +2,7 @@
 <html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://*.firebaseio.com https://*.firebasedatabase.app; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app; frame-src https://*.firebaseapp.com https://*.firebaseio.com https://*.firebasedatabase.app; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Cardápio</title>
@@ -114,6 +114,48 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
 #idxPanel button.go em{font-style:normal;color:rgba(43,29,20,.5);font-size:1rem}
 @keyframes fade{from{opacity:0}}@keyframes up{from{transform:translateY(40px);opacity:0}}
 @media (min-width:700px) and (min-height:500px){#idxPanel{align-items:center}#idxPanel .sh{border-radius:22px}}
+/* ---------- pedidos pela mesa ---------- */
+.it .add{flex:none;width:calc(var(--fs-i)*1.25);height:calc(var(--fs-i)*1.25);border-radius:50%;background:var(--accent);color:#fff;font-family:var(--sans);font-weight:700;font-size:var(--fs-i);line-height:1;display:grid;place-items:center;align-self:center;margin-left:.15em;box-shadow:0 2px 5px rgba(0,0,0,.2);cursor:pointer}
+.it .add:active,.pdia .add:active{transform:scale(.9)}
+.pdia{position:relative}
+.pdia .add{position:absolute;right:.6em;bottom:.6em;width:calc(var(--fs-i)*1.3);height:calc(var(--fs-i)*1.3);border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:var(--fs-i);display:grid;place-items:center;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+#mesaBtn{position:fixed;z-index:20;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));display:flex;align-items:center;gap:8px;height:44px;padding:0 8px 0 16px;border-radius:99px;background:rgba(20,13,9,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f3e6d3;border:1px solid rgba(255,235,205,.18);font-size:.92rem;font-weight:700;letter-spacing:.02em}
+#mesaBtn b{min-width:28px;height:28px;padding:0 8px;border-radius:99px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:.85rem}
+#mesaBtn b[hidden]{display:none}
+#mesaBtn.pop b{animation:pop .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{40%{transform:scale(1.35)}}
+#mesaPanel{position:fixed;inset:0;z-index:40;background:rgba(10,6,4,.55);display:none;align-items:flex-end;justify-content:center}
+#mesaPanel.on{display:flex;animation:fade .25s}
+#mesaPanel .sh{width:min(480px,100%);background:#f7f0e3;border-radius:22px 22px 0 0;padding:18px 20px calc(18px + env(safe-area-inset-bottom));animation:up .35s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto;user-select:text;-webkit-user-select:text}
+@media (min-width:700px) and (min-height:500px){#mesaPanel{align-items:center}#mesaPanel .sh{border-radius:22px}}
+.mp-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.mp-h h3{font-family:var(--serif);font-size:1.7rem;line-height:1}
+.mp-h button{font-size:.9rem;color:rgba(43,29,20,.6);padding:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:rgba(43,29,20,.08);border-radius:99px;padding:4px;margin-bottom:14px}
+.seg button{border-radius:99px;padding:9px 6px;font-size:.88rem;font-weight:700;color:rgba(43,29,20,.65)}
+.seg button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.cl{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(43,29,20,.12)}
+.cl .n{font-family:var(--serif);font-size:1.15rem;font-weight:600;line-height:1.15}
+.cl .p{font-size:.85rem;color:rgba(43,29,20,.6)}
+.qty{display:flex;align-items:center;gap:6px;grid-row:span 2}
+.qty button{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid rgba(43,29,20,.18);font-size:1.1rem;font-weight:700}
+.qty span{min-width:22px;text-align:center;font-weight:700}
+.mp-vazio{text-align:center;color:rgba(43,29,20,.6);padding:22px 8px;font-style:italic;font-family:var(--serif);font-size:1.15rem}
+#mpNota{width:100%;margin-top:12px;border:1px solid rgba(43,29,20,.2);border-radius:12px;padding:10px 12px;font:inherit;font-size:.95rem;background:#fffaf2;resize:none;min-height:64px;color:var(--ink)}
+.mp-tot{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--serif);font-size:1.35rem;font-weight:700;margin:12px 0 4px}
+.mp-btn{width:100%;padding:14px;border-radius:99px;background:var(--accent);color:#fff;font-weight:700;font-size:1rem;margin-top:10px}
+.mp-btn:disabled{opacity:.45}
+.mp-btn.sec{background:#fff;color:var(--ink);border:1px solid rgba(43,29,20,.2)}
+.mp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mp-ped{padding:10px 0;border-bottom:1px solid rgba(43,29,20,.12)}
+.mp-ped .h{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(43,29,20,.55);margin-bottom:4px}
+.mp-ped .l{display:flex;justify-content:space-between;gap:10px;font-size:.98rem;padding:1px 0}
+.mp-ped .l span:last-child{color:rgba(43,29,20,.6);white-space:nowrap}
+.mp-msg{font-size:.88rem;color:rgba(43,29,20,.65);text-align:center;margin-top:10px}
+.mp-ok{background:#e4efdf;color:#2e5a24;border-radius:12px;padding:10px 12px;font-size:.92rem;margin-bottom:10px}
+.mp-err{background:#f6dcd6;color:#8a2a1b;border-radius:12px;padding:10px 12px;font-size:.92rem;margin-bottom:10px}
+#toast{position:fixed;left:50%;top:max(66px,calc(env(safe-area-inset-top) + 62px));transform:translate(-50%,-10px);z-index:45;background:rgba(20,13,9,.88);color:#f3e6d3;padding:10px 18px;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+#toast.on{opacity:1;transform:translate(-50%,0)}
 #loading{position:fixed;inset:0;display:grid;place-items:center;color:#f3e6d3;font-family:var(--serif);font-size:1.3rem;font-style:italic;letter-spacing:.04em}
 @media (prefers-reduced-motion:reduce){#hint{animation:none}#book{transition:none}}
 </style>
@@ -131,12 +173,24 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
   <button id="bNext" aria-label="Página seguinte"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>
 </div>
 <div id="hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11V5a2 2 0 0 1 4 0v6m0-2a2 2 0 0 1 4 0v2m0 0a2 2 0 0 1 4 0v3a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4L4 15a2 2 0 0 1 3.3-2.2L9 15"/></svg>Toque para abrir</div>
+<button id="mesaBtn" hidden aria-haspopup="dialog"><span id="mesaLbl">Mesa</span><b id="cartN">0</b></button>
+<div id="mesaPanel" role="dialog" aria-modal="true" aria-labelledby="mpT"><div class="sh">
+  <div class="mp-h"><h3 id="mpT">Mesa</h3><button id="mpX">Fechar</button></div>
+  <div class="seg" role="tablist"><button role="tab" id="sgP" aria-selected="true">O meu pedido</button><button role="tab" id="sgM" aria-selected="false">Pedidos da mesa</button></div>
+  <div id="mpCorpo"></div>
+</div></div>
+<div id="toast" role="status"></div>
 <div id="idxPanel" role="dialog" aria-modal="true" aria-label="Índice"><div class="sh"><h3>Índice</h3><div id="idxList"></div></div></div>
 
 <script>
 (function () {
   const A = APP, R = A.R, esc = A.esc, $ = id => document.getElementById(id);
-  const mesa = new URLSearchParams(location.search).get('mesa');
+  const QS = new URLSearchParams(location.search);
+  let mesa = QS.get('mesa');
+  const COD = (QS.get('c') || '').replace(/[^a-z0-9]/gi, '').slice(0, 40);
+  let pedir = false, codOk = null, conta = {}, painelTab = 'P', enviado = '', erro = '';
+  let carrinho = {}; try { carrinho = JSON.parse(sessionStorage.getItem('carrinho-' + COD)) || {}; } catch (e) { }
+  const guardaCarrinho = () => { try { sessionStorage.setItem('carrinho-' + COD, JSON.stringify(carrinho)); } catch (e) { } };
   document.title = R.nome + ' · Cardápio';
   const LOGO = `url('${String(R.logo).replace(/['"()\s]/g, encodeURIComponent)}')`, logoImg = /\.(jpe?g|webp)$/i.test(R.logo) || R.logoNaCapa === 'imagem';
   let dados = null, flip = null, pagCat = [], ultimo = 0, abriu = false;
@@ -171,7 +225,8 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
   function itemHtml(p) {
     const al = (p.alerg || []).length ? `<span class="al">${p.alerg.join('·')}</span>` : '';
     const tags = (p.destaque ? '<span class="tag chef">★ Sugestão do chef</span>' : '') + (p.veg ? '<span class="tag veg">Vegetariano</span>' : '');
-    const corpo = `<div><div class="l1"><span class="nm">${esc(p.nome)}${al}</span><span class="dots"></span><span class="pr">${pr(p.preco)}</span></div>${p.desc ? `<div class="ds">${esc(p.desc)}</div>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div>`;
+    const add = pedir && !p.esgotado ? `<button class="add" data-add="${esc(p.id)}" aria-label="Juntar ${esc(p.nome)} ao pedido">+</button>` : '';
+    const corpo = `<div><div class="l1"><span class="nm">${esc(p.nome)}${al}</span><span class="dots"></span><span class="pr">${pr(p.preco)}</span>${add}</div>${p.desc ? `<div class="ds">${esc(p.desc)}</div>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div>`;
     return `<div class="it${p.esgotado ? ' esg' : ''}${p.foto ? ' foto' : ''}">${p.foto ? `<img src="${esc(p.foto)}" alt="">` : ''}${corpo}</div>`;
   }
   const orn = '<div class="orn"><i></i></div>';
@@ -179,9 +234,9 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
   function boasVindas(idx) {
     const pd = dados.pratoDia || {}, aviso = (dados.aviso || '').trim();
     return `<div class="wel">${logoImg ? `<div class="lg img"><img src="${esc(R.logo)}" alt=""></div>` : `<div class="lg" style="--logo:${LOGO}"></div>`}
-      <h1>${esc(R.nome)}</h1><div class="sl">${esc(R.slogan || '')}</div>${mesa ? `<div class="mesa">Mesa ${esc(mesa)}</div>` : ''}${orn}
+      <h1>${esc(R.nome)}</h1><div class="sl">${esc(R.slogan || '')}</div>${mesa ? `<div class="mesa">${esc(nomeMesa())}</div>` : ''}${orn}
       ${aviso ? `<div class="aviso">${esc(aviso)}</div>` : ''}
-      ${pd.ativo && pd.nome ? `<div class="pdia"><small>Prato do dia</small><b>${esc(pd.nome)}</b>${pd.desc ? `<span>${esc(pd.desc)}</span>` : ''}${pd.preco ? `<span class="pr">${pr(pd.preco)}</span>` : ''}</div>` : ''}
+      ${pd.ativo && pd.nome ? `<div class="pdia"><small>Prato do dia</small><b>${esc(pd.nome)}</b>${pd.desc ? `<span>${esc(pd.desc)}</span>` : ''}${pd.preco ? `<span class="pr">${pr(pd.preco)}</span>` : ''}${pedir && pd.preco ? `<button class="add" data-add="pratoDia" aria-label="Juntar o prato do dia ao pedido">+</button>` : ''}</div>` : ''}
       ${idx ? `<ul class="idx">${idx}</ul>` : ''}</div>`;
   }
   function alergenios() {
@@ -252,7 +307,7 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
     });
     flip.loadFromHTML(el.querySelectorAll('.page'));
     flip.on('flip', e => estado(e.data));
-    el.onclick = e => { const a = e.target.closest('[data-pag]'); if (a) { e.preventDefault(); irPara(+a.dataset.pag); } };
+    el.onclick = e => { const ad = e.target.closest('[data-add]'); if (ad) { e.preventDefault(); e.stopPropagation(); juntar(ad.dataset.add); return; } const a = e.target.closest('[data-pag]'); if (a) { e.preventDefault(); irPara(+a.dataset.pag); } };
     $('loading').style.display = 'none';
     requestAnimationFrame(() => el.classList.add('pronto'));
     estado(flip.getCurrentPageIndex());
@@ -289,10 +344,77 @@ h2.cat small{display:block;font-family:var(--sans);font-size:.34em;letter-spacin
   $('idxPanel').onclick = e => { const b = e.target.closest('[data-pag]'); if (b) irPara(+b.dataset.pag); else if (e.target.id === 'idxPanel') fecharIdx(); };
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { const n = medidas(); if (Math.abs(n.w - M.w) > 8 || n.duas !== M.duas) construir(); }, 250); });
 
+  // ---------- pedidos pela mesa ----------
+  const pratoInfo = id => { if (id === 'pratoDia') { const pd = (dados && dados.pratoDia) || {}; return pd.ativo ? { nome: pd.nome, preco: pd.preco } : null; } const p = ((dados && dados.pratos) || {})[id]; return p && !p.esgotado ? { nome: p.nome, preco: p.preco } : null; };
+  const nCarrinho = () => Object.values(carrinho).reduce((x, q) => x + q, 0);
+  let tt; const toast = t => { $('toast').textContent = t; $('toast').classList.add('on'); clearTimeout(tt); tt = setTimeout(() => $('toast').classList.remove('on'), 1800); };
+  function atualizarBotao(pop) {
+    $('mesaBtn').hidden = !(mesa || COD); $('mesaLbl').textContent = nomeMesa() || 'A sua mesa';
+    const n = nCarrinho(); $('cartN').hidden = !pedir || !n; $('cartN').textContent = n;
+    if (pop) { $('mesaBtn').classList.remove('pop'); void $('mesaBtn').offsetWidth; $('mesaBtn').classList.add('pop'); }
+  }
+  function juntar(id) { const i = pratoInfo(id); if (!i || !pedir) return; carrinho[id] = Math.min(30, (carrinho[id] || 0) + 1); guardaCarrinho(); enviado = ''; atualizarBotao(true); toast('Juntou ao pedido: ' + i.nome); if ($('mesaPanel').classList.contains('on')) painel(); }
+  const abrirPainel = tab => { if (tab) painelTab = tab; erro = ''; $('toast').classList.remove('on'); painel(); $('mesaPanel').classList.add('on'); };
+  const fecharPainel = () => $('mesaPanel').classList.remove('on');
+  $('mesaBtn').onclick = () => abrirPainel(nCarrinho() ? 'P' : (Object.keys(conta.pedidos || {}).length ? 'M' : 'P'));
+  $('mpX').onclick = fecharPainel; $('mesaPanel').addEventListener('click', e => { if (e.target.id === 'mesaPanel') fecharPainel(); });
+  $('sgP').onclick = () => { painelTab = 'P'; painel(); }; $('sgM').onclick = () => { painelTab = 'M'; painel(); };
+  const agoraTxt = t => { const m = Math.max(0, Math.round((Date.now() - t) / 60000)); return m < 1 ? 'agora mesmo' : 'há ' + m + ' min'; };
+  function painel() {
+    $('mpT').textContent = nomeMesa() || 'A sua mesa';
+    $('sgP').setAttribute('aria-selected', painelTab === 'P'); $('sgM').setAttribute('aria-selected', painelTab === 'M');
+    const peds = Object.entries(conta.pedidos || {}).map(([id, p]) => ({ id, ...p })).sort((a, b) => (a.criadoEm || 0) - (b.criadoEm || 0));
+    $('sgM').textContent = 'Pedidos da mesa' + (peds.length ? ` (${peds.length})` : '');
+    document.querySelector('#mesaPanel .seg').hidden = !pedir;
+    if (!pedir) { $('mpCorpo').innerHTML = `<p class="mp-vazio">${codOk === false ? 'Este código QR já não está ativo. Peça ajuda ao empregado.' : 'Os pedidos pelo telemóvel não estão disponíveis neste momento. O empregado vem tomar nota.'}</p>`; return; }
+    let h = '';
+    if (painelTab === 'P') {
+      const linhas = Object.entries(carrinho).map(([id, q]) => ({ id, q, i: pratoInfo(id) })).filter(x => x.i);
+      const tot = linhas.reduce((x, l) => x + l.q * (Number(l.i.preco) || 0), 0);
+      if (enviado) h += `<div class="mp-ok">${esc(enviado)}</div>`;
+      if (erro) h += `<div class="mp-err">${esc(erro)}</div>`;
+      h += linhas.length ? linhas.map(l => `<div class="cl"><span class="n">${esc(l.i.nome)}</span><div class="qty"><button data-q="${esc(l.id)}" data-d="-1" aria-label="Menos">−</button><span>${l.q}</span><button data-q="${esc(l.id)}" data-d="1" aria-label="Mais">+</button></div><span class="p">${pr(l.i.preco)} cada</span></div>`).join('')
+        + `<textarea id="mpNota" maxlength="200" placeholder="Algum pedido especial? Ex.: sem cebola, carne bem passada"></textarea><div class="mp-tot"><span>Total</span><span>${pr(tot)}</span></div><button class="mp-btn" id="mpEnviar">Enviar pedido para a cozinha</button><p class="mp-msg">O pedido vai direto para a cozinha. A conta é paga no fim, como sempre.</p>`
+        : (enviado ? '' : `<p class="mp-vazio">Toque no + junto a um prato para o juntar ao seu pedido.</p>`);
+    } else {
+      const tot = peds.reduce((x, p) => x + A.totalPedido(p, dados), 0), ch = conta.chamada;
+      h += peds.length ? peds.map((p, i) => `<div class="mp-ped"><div class="h">Pedido ${i + 1} · ${agoraTxt(p.criadoEm)}${p.visto ? ' · recebido pela cozinha' : ''}</div>${Object.entries(p.itens || {}).map(([id, it]) => `<div class="l"><span>${Number(it.q) || 0}× ${esc(id === 'pratoDia' ? 'Prato do dia: ' + it.n : (((dados.pratos || {})[id] || {}).nome || it.n))}</span><span>${pr((Number(it.q) || 0) * A.precoDe(id, dados))}</span></div>`).join('')}${p.nota ? `<div class="l"><em>${esc(p.nota)}</em></div>` : ''}</div>`).join('')
+        + `<div class="mp-tot"><span>Total da mesa</span><span>${pr(tot)}</span></div>` : `<p class="mp-vazio">Ainda não há pedidos nesta mesa.</p>`;
+      h += ch ? `<div class="mp-ok" style="margin-top:12px">${ch.tipo === 'conta' ? 'Pediu a conta' : 'Chamou o empregado'} ${agoraTxt(ch.em)}. Já vem a caminho.</div>`
+        : `<div class="mp-row" style="margin-top:12px"><button class="mp-btn sec" data-ch="empregado">Chamar o empregado</button><button class="mp-btn sec" data-ch="conta">Pedir a conta</button></div>`;
+    }
+    $('mpCorpo').innerHTML = h;
+  }
+  $('mpCorpo').addEventListener('click', async e => {
+    const q = e.target.closest('[data-q]');
+    if (q) { const id = q.dataset.q; carrinho[id] = Math.max(0, Math.min(30, (carrinho[id] || 0) + Number(q.dataset.d))); if (!carrinho[id]) delete carrinho[id]; guardaCarrinho(); atualizarBotao(); painel(); return; }
+    const ch = e.target.closest('[data-ch]');
+    if (ch) { ch.disabled = true; try { await A.db.ref(`contas/${COD}/chamada`).set({ tipo: ch.dataset.ch, em: A.agora() }); toast(ch.dataset.ch === 'conta' ? 'Pedimos a conta ao empregado.' : 'O empregado já foi avisado.'); } catch (x) { toast('Não foi possível avisar. Chame o empregado com um gesto.'); ch.disabled = false; } return; }
+    if (e.target.id === 'mpEnviar') {
+      const b = e.target, itens = {};
+      Object.entries(carrinho).forEach(([id, n]) => { const i = pratoInfo(id); if (i && n > 0) itens[id] = { q: n, n: String(i.nome).slice(0, 80) }; });
+      if (!Object.keys(itens).length) return;
+      const nota = ($('mpNota').value || '').trim().slice(0, 200), dadosPedido = { itens, criadoEm: A.agora() }; if (nota) dadosPedido.nota = nota;
+      b.disabled = true; b.textContent = 'A enviar…';
+      try { const r = A.db.ref(`contas/${COD}/pedidos`).push(); await r.set(dadosPedido); carrinho = {}; guardaCarrinho(); erro = ''; enviado = 'Pedido enviado. Já está na cozinha.'; atualizarBotao(); painelTab = 'M'; painel(); toast('Pedido enviado para a cozinha'); }
+      catch (x) { erro = 'Não foi possível enviar o pedido. Verifique a internet ou chame o empregado.'; b.disabled = false; painel(); }
+    }
+  });
+  async function verificarMesa() {
+    if (!COD) return;
+    try {
+      const s = await A.db.ref('codigos/' + COD).once('value'), v = s.val();
+      codOk = !!v; if (v && v.nome) mesa = String(v.nome).replace(/^Mesa\s+/i, '');
+    } catch (e) { codOk = false; }
+    if (codOk) A.db.ref('contas/' + COD).on('value', s => { conta = s.val() || {}; if ($('mesaPanel').classList.contains('on')) painel(); });
+  }
+  // a etiqueta usa o nome da mesa como o restaurante o escreveu ("Mesa 5", "Esplanada 2")
+  const nomeMesa = () => mesa && /^\d+$/.test(mesa) ? 'Mesa ' + mesa : (mesa || '');
+
   // ---------- dados (atualizam sozinhos quando o restaurante muda o cardápio) ----------
   A.aplicarTema();
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => A.iniciar(false)).then(() => {
-    A.db.ref('cardapio').on('value', s => { dados = s.val() || A.cardapioDeConfig(); construir(); });
+    verificarMesa().then(() => A.db.ref('cardapio').on('value', s => { dados = s.val() || A.cardapioDeConfig(); pedir = !!(codOk && dados.pedidos === true); atualizarBotao(); construir(); if ($('mesaPanel').classList.contains('on')) painel(); }));
   }).catch(() => { $('loading').textContent = 'Não foi possível carregar o cardápio. Verifique a internet.'; });
 })();
 </script>

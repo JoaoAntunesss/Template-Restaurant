@@ -76,8 +76,26 @@
     return { onAuthStateChanged(cb) { cbs.push(cb); setTimeout(() => cb(user), 0); }, signInWithEmailAndPassword: () => set({ uid: 'demo', email: 'demo@exemplo.pt' }), signInWithPopup: () => set({ uid: 'demo', email: 'demo@exemplo.pt' }), signOut: () => set(null) };
   }
 
-  // Primeiro cardápio, a partir de restaurante.js
-  function semente() { return { cardapio: cardapioDeConfig(), admins: { demo: true } }; }
+  // Hora do servidor (Firebase) ou do próprio navegador (demonstração)
+  const agora = () => (DEMO ? Date.now() : firebase.database.ServerValue.TIMESTAMP);
+  // Código secreto de cada mesa (vai no QR). Quem não está na mesa não o sabe, por isso não consegue pedir para ela.
+  const gerarCodigo = () => { const a = 'abcdefghijkmnpqrstuvwxyz23456789', r = new Uint8Array(10); crypto.getRandomValues(r); return Array.from(r, x => a[x % a.length]).join(''); };
+
+  // Primeiro cardápio, a partir de restaurante.js (na demonstração já vem com mesas e alguns pedidos de exemplo)
+  function semente() {
+    const t = { cardapio: cardapioDeConfig(), admins: { demo: true }, mesas: {}, codigos: {}, contas: {} };
+    t.cardapio.pedidos = true;
+    for (let n = 1; n <= 8; n++) { const k = 'm' + String(n).padStart(2, '0'), c = 'demo' + n + 'mesa'; t.mesas[k] = { num: n, nome: 'Mesa ' + n, codigo: c }; t.codigos[c] = { mesa: k, nome: 'Mesa ' + n }; }
+    const ids = Object.keys(t.cardapio.pratos), pid = nome => ids.find(i => t.cardapio.pratos[i].nome.startsWith(nome)) || ids[0];
+    const item = (nome, q) => ({ [pid(nome)]: { q, n: t.cardapio.pratos[pid(nome)].nome } });
+    const ha = min => Date.now() - min * 60000;
+    t.contas.demo3mesa = { pedidos: {
+      '-Dex1': { itens: { ...item('Pão', 1), ...item('Polvo à galega', 1), ...item('Vinho da casa', 1) }, criadoEm: ha(38), visto: true },
+      '-Dex2': { itens: { ...item('Bacalhau à lagareiro', 2), ...item('Água', 2) }, nota: 'Um dos bacalhaus sem grelos, por favor.', criadoEm: ha(6) } } };
+    t.contas.demo5mesa = { pedidos: { '-Dex3': { itens: { ...item('Francesinha', 2), ...item('Imperial', 2) }, criadoEm: ha(52), visto: true },
+      '-Dex4': { itens: { ...item('Pastel de nata', 2), ...item('Café', 2) }, criadoEm: ha(14), visto: true } }, chamada: { tipo: 'conta', em: ha(2) } };
+    return t;
+  }
   function cardapioDeConfig() {
     const categorias = {}, pratos = {};
     (R.cardapioInicial || []).forEach((c, ci) => {
@@ -87,5 +105,11 @@
     return { categorias, pratos, pratoDia: R.pratoDiaInicial || { ativo: false }, aviso: R.avisoInicial || '', aspeto: R.capa };
   }
 
-  window.APP = { R, DEMO, ALERGENIOS, esc, eur, telInt, telFmt, aplicarTema, organizar, iniciar, cardapioDeConfig, get db() { return _db; }, get auth() { return _auth; } };
+  // Total de um pedido, sempre com os preços do cardápio (o cliente não consegue mudar preços)
+  function totalPedido(p, cd) {
+    return Object.entries((p && p.itens) || {}).reduce((s, [id, it]) => s + (Number(it.q) || 0) * precoDe(id, cd), 0);
+  }
+  function precoDe(id, cd) { cd = cd || {}; if (id === 'pratoDia') return Number((cd.pratoDia || {}).preco) || 0; const p = (cd.pratos || {})[id]; return p ? Number(p.preco) || 0 : 0; }
+
+  window.APP = { R, DEMO, ALERGENIOS, esc, eur, telInt, telFmt, aplicarTema, organizar, iniciar, cardapioDeConfig, agora, gerarCodigo, totalPedido, precoDe, get db() { return _db; }, get auth() { return _auth; } };
 })();

@@ -2,7 +2,7 @@
 <html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://*.firebaseio.com https://*.firebasedatabase.app; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app; frame-src https://*.firebaseapp.com https://*.firebaseio.com https://*.firebasedatabase.app; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Painel</title>
@@ -100,16 +100,46 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
 .qr-prev .qbox{width:150px;height:150px;background:#fff;padding:10px;border-radius:14px;box-shadow:0 1px 0 var(--line)}
 .qr-prev code{font-size:.85rem;background:#f4efe6;padding:6px 10px;border-radius:8px;word-break:break-all}
 #qrPrint{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:18px}
-.qcard{border:1.5px solid var(--line);border-radius:18px;padding:18px 16px;text-align:center;background:#fffdf8;break-inside:avoid}
+.qcard{position:relative;border:1.5px solid var(--line);border-radius:18px;padding:18px 16px;text-align:center;background:#fffdf8;break-inside:avoid}
 .qcard .n{font-family:var(--serif);font-size:1.5rem;font-weight:700}.qcard .t{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--accent);margin:2px 0 10px}
 .qcard .q{width:150px;height:150px;margin:0 auto}.qcard .q svg{width:100%;height:100%}
 .qcard .m{font-family:var(--serif);font-size:1.25rem;font-weight:600;margin-top:8px}.qcard small{display:block;color:var(--muted);font-size:.75rem;margin-top:4px}
+/* pedidos */
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:#c0392b;color:#fff;font-size:.72rem;font-weight:700;margin-left:6px;vertical-align:1px}
+.tabs button[aria-selected=true] .badge{background:#fff;color:#c0392b}
+.mesas{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.mesa{position:relative;text-align:left;background:#fff;border-radius:22px;padding:18px 18px 16px;box-shadow:0 1px 0 var(--line),var(--sh);display:flex;flex-direction:column;gap:4px;min-height:132px;border:2px solid transparent;transition:transform .2s var(--ease),border-color .2s}
+.mesa:hover{transform:translateY(-2px)}
+.mesa .mn{font-family:var(--serif);font-size:1.7rem;font-weight:700;line-height:1}
+.mesa .ms{font-size:.9rem;color:var(--muted)}
+.mesa .tot{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--accent-dark);margin-top:auto}
+.mesa.livre{background:#fbf8f3;box-shadow:0 1px 0 var(--line)}.mesa.livre .mn{color:var(--muted)}
+.mesa.novo{border-color:var(--accent)}
+.mesa.chama{border-color:#c0392b}
+.flags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.flag{font-size:.72rem;font-weight:700;padding:4px 9px;border-radius:99px;background:var(--soft);color:var(--accent-dark)}
+.flag.red{background:#c0392b;color:#fff;animation:piscar 1.4s ease-in-out infinite}
+@keyframes piscar{50%{opacity:.55}}
+.ped{border-top:1px solid var(--line);padding:14px 0}
+.ped:first-of-type{border-top:0}
+.ped-h{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.ped-h b{color:var(--ink)}
+.ped.nv{background:linear-gradient(90deg,var(--soft),transparent);margin:0 -26px;padding:14px 26px}
+.li{display:grid;grid-template-columns:2.4em 1fr auto;gap:6px;font-size:1rem;padding:2px 0}
+.li .q{font-weight:700;color:var(--accent-dark)}.li .v{font-variant-numeric:tabular-nums;color:var(--muted)}
+.nota{font-style:italic;font-size:.9rem;background:#fbf6ec;border-left:3px solid var(--accent);padding:6px 10px;border-radius:4px;margin-top:6px}
+.chamada{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#c0392b;color:#fff;border-radius:16px;padding:12px 14px;margin:12px 0}
+.chamada .btn{background:#fff;color:#c0392b}
+.totb{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--ink);margin-top:6px;padding-top:12px;font-family:var(--serif);font-size:1.5rem;font-weight:700}
+.vazio{color:var(--muted);text-align:center;padding:26px 0}
+.qacts{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.qacts .tg{cursor:pointer}
 #demo{display:none;background:var(--ink);color:#f4e9d8;text-align:center;font-size:.8rem;padding:6px}
 #demo a,#demo button{color:#e6b98f;text-decoration:underline}
 @media print{
   body{background:#fff}body *{visibility:hidden}#qrPrint,#qrPrint *{visibility:visible}
   #qrPrint{position:absolute;left:0;top:0;width:100%;grid-template-columns:repeat(2,1fr);gap:10mm;margin:0}
-  .qcard{border:1px dashed #999;padding:10mm 6mm;height:auto}.qcard .q{width:45mm;height:45mm}
+  .qcard{border:1px dashed #999;padding:10mm 6mm;height:auto}.qacts{display:none!important}.qcard .q{width:45mm;height:45mm}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -129,18 +159,27 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
 
 <div id="app">
   <header class="top">
-    <div><h1 class="nome"></h1><p>Cardápio, prato do dia, aspeto da capa e códigos QR</p></div>
+    <div><h1 class="nome"></h1><p>Pedidos das mesas, cardápio, prato do dia, capa e códigos QR</p></div>
     <div class="acts"><a class="btn" href="index.html" target="_blank">Ver site</a><a class="btn b-main" href="menu.html" target="_blank">Abrir cardápio</a><button class="btn" id="bSair">Sair</button></div>
   </header>
   <nav class="tabs" role="tablist">
-    <button role="tab" data-v="hoje" aria-selected="true">Hoje</button>
+    <button role="tab" data-v="pedidos" aria-selected="true">Pedidos<span class="badge" id="bdg" hidden></span></button>
+    <button role="tab" data-v="hoje">Hoje</button>
     <button role="tab" data-v="menu">Cardápio</button>
     <button role="tab" data-v="capa">Capa</button>
-    <button role="tab" data-v="qr">Códigos QR</button>
+    <button role="tab" data-v="qr">Mesas e QR</button>
   </nav>
 
+  <!-- PEDIDOS -->
+  <section class="view on" id="v-pedidos">
+    <div class="card"><div class="row" style="justify-content:space-between">
+      <div><h2>Pedidos das mesas</h2><p class="sub" style="margin:0" id="pedResumo">A carregar…</p></div>
+      <label class="chk"><input type="checkbox" id="pedAtivos"> Aceitar pedidos pelo QR da mesa</label></div></div>
+    <div class="mesas" id="mesasGrid"></div>
+  </section>
+
   <!-- HOJE -->
-  <section class="view on" id="v-hoje">
+  <section class="view" id="v-hoje">
     <div class="grid2">
       <div class="card"><h2>Prato do dia</h2><p class="sub">Aparece logo na primeira página do cardápio e no site.</p>
         <label class="chk"><input type="checkbox" id="pdAtivo"> Mostrar prato do dia</label>
@@ -176,20 +215,29 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
     </div>
   </section>
 
-  <!-- QR -->
+  <!-- MESAS E QR -->
   <section class="view" id="v-qr">
-    <div class="card"><h2>Códigos QR para as mesas</h2><p class="sub">O código abre sempre o cardápio atualizado, em ecrã inteiro no telemóvel. Não é preciso voltar a imprimir quando mudar os pratos ou os preços.</p>
-      <div class="qr-prev"><div class="qbox" id="qrOne"></div><div><label style="margin-top:0">Endereço do cardápio</label><code id="qrUrl"></code>
-        <div class="row" style="margin-top:12px"><button class="btn b-soft b-sm" id="qrPng">Descarregar imagem (PNG)</button><button class="btn b-soft b-sm" id="qrCopy">Copiar endereço</button></div></div></div>
-      <div class="row" style="margin-top:18px;align-items:flex-end">
-        <div style="width:150px"><label for="nMesas">Número de mesas</label><input id="nMesas" type="number" min="1" max="80" value="8"></div>
-        <label class="chk" style="margin-bottom:12px"><input type="checkbox" id="comMesa" checked> Mostrar o número da mesa no cardápio</label>
-        <button class="btn b-ink" id="qrGerar" style="margin-bottom:2px">Gerar cartões</button><button class="btn b-main" id="qrPrint1" style="margin-bottom:2px">Imprimir</button>
+    <div class="card"><h2>Mesas e códigos QR</h2>
+      <p class="sub">Cada mesa tem o seu QR. Quem o lê vê o cardápio e pode fazer o pedido para essa mesa; os pedidos aparecem em "Pedidos". Crie as mesas que precisar e imprima os cartões.</p>
+      <div class="row" style="align-items:flex-end;margin-top:6px">
+        <div style="width:150px"><label for="nNovas">Quantas mesas</label><input id="nNovas" type="number" min="1" max="50" value="1"></div>
+        <button class="btn b-ink" id="mAdd" style="margin-bottom:2px">+ Adicionar mesas</button>
+        <button class="btn b-main" id="qrPrint1" style="margin-bottom:2px">Imprimir cartões</button>
       </div>
       <div id="qrPrint"></div>
     </div>
+    <div class="card"><h2>QR geral do cardápio</h2><p class="sub">Para a montra, a porta ou as redes sociais. Mostra o cardápio, sem pedidos. Não é preciso voltar a imprimir quando mudar os pratos ou os preços.</p>
+      <div class="qr-prev"><div class="qbox" id="qrOne"></div><div><label style="margin-top:0">Endereço do cardápio</label><code id="qrUrl"></code>
+        <div class="row" style="margin-top:12px"><button class="btn b-soft b-sm" id="qrPng">Descarregar imagem (PNG)</button><button class="btn b-soft b-sm" id="qrCopy">Copiar endereço</button></div></div></div>
+    </div>
   </section>
 </div>
+
+<!-- pedidos de uma mesa -->
+<div class="sheet" id="shM" role="dialog" aria-modal="true" aria-labelledby="mT"><div class="sheet-in">
+  <div class="row" style="justify-content:space-between"><h3 id="mT">Mesa</h3><button class="btn b-soft b-sm" id="mFechar">Fechar</button></div>
+  <div id="mCorpo"></div>
+</div></div>
 
 <!-- editar prato -->
 <div class="sheet" id="sh" role="dialog" aria-modal="true" aria-labelledby="shT"><div class="sheet-in">
@@ -243,13 +291,15 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
   function arrancar() {
     if (arrancou) return; arrancou = true;
     db().on('value', s => { CD = s.val() || A.cardapioDeConfig(); if (!s.val()) db().set(CD); preencher(); });
+    A.db.ref('mesas').on('value', s => { MESAS = s.val() || {}; renderPedidos(); renderMesas(); });
+    A.db.ref('contas').on('value', s => { CONTAS = s.val() || {}; verNovos(); renderPedidos(); });
   }
   function preencher() {
     const pd = CD.pratoDia || {};
     if (document.activeElement && document.activeElement.closest('#v-hoje .card')) { /* não apaga o que está a escrever */ } else {
       $('pdAtivo').checked = !!pd.ativo; $('pdNome').value = pd.nome || ''; $('pdDesc').value = pd.desc || ''; $('pdPreco').value = pd.preco || ''; $('aviso').value = CD.aviso || '';
     }
-    renderCats(); renderEsg(); capaInit();
+    renderCats(); renderEsg(); capaInit(); renderPedidos(); $('pedAtivos').checked = CD.pedidos === true;
   }
 
   // ---------- hoje ----------
@@ -347,15 +397,95 @@ label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:12
   });
   $('capaGuardar').onclick = () => A.db.ref('cardapio/aspeto').set({ estilo: asp.estilo, cor: asp.cor, gravacao: asp.gravacao }).then(() => ok('capaOk'));
 
-  // ---------- QR ----------
+  // ---------- pedidos das mesas ----------
+  let MESAS = {}, CONTAS = {}, abertaM = null, limparArmado = false, conhecidos = null, actx;
+  const listaMesas = () => Object.entries(MESAS).map(([k, m]) => ({ k, ...m })).sort((a, b) => (a.num || 0) - (b.num || 0));
+  const pedidosDe = c => Object.entries(((CONTAS[c] || {}).pedidos) || {}).map(([id, p]) => ({ id, ...p })).sort((a, b) => (a.criadoEm || 0) - (b.criadoEm || 0));
+  const hora = t => new Date(t).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+  const ha = t => { const m = Math.max(0, Math.round((Date.now() - t) / 60000)); return m < 1 ? 'agora' : m < 60 ? `há ${m} min` : `há ${Math.floor(m / 60)} h ${m % 60} min`; };
+  const nomeItem = (id, it) => id === 'pratoDia' ? 'Prato do dia: ' + (it.n || '') : (((CD.pratos || {})[id] || {}).nome || it.n || 'Prato removido');
+  const chamTxt = ch => ch.tipo === 'conta' ? 'Pede a conta' : 'Chama o empregado';
+  function beep() { // aviso sonoro quando chega um pedido novo ou uma chamada
+    try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); const t = actx.currentTime;
+      [0, .18].forEach(d => { const o = actx.createOscillator(), g = actx.createGain(); o.frequency.value = d ? 1175 : 880; g.gain.setValueAtTime(.0001, t + d); g.gain.exponentialRampToValueAtTime(.22, t + d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + d + .35); o.connect(g).connect(actx.destination); o.start(t + d); o.stop(t + d + .4); });
+    } catch (e) { }
+  }
+  function verNovos() {
+    const ids = new Set(); Object.entries(CONTAS).forEach(([c, ct]) => { Object.keys(ct.pedidos || {}).forEach(id => ids.add(c + '/' + id)); if (ct.chamada) ids.add(c + '/ch' + ct.chamada.em); });
+    if (conhecidos && [...ids].some(i => !conhecidos.has(i))) beep();
+    conhecidos = ids;
+  }
+  function renderPedidos() {
+    const ms = listaMesas(); let nNovos = 0, nOcup = 0, nChama = 0;
+    $('mesasGrid').innerHTML = ms.map(m => {
+      const peds = pedidosDe(m.codigo), ch = (CONTAS[m.codigo] || {}).chamada, novos = peds.filter(p => !p.visto).length;
+      const tot = peds.reduce((x, p) => x + A.totalPedido(p, CD), 0);
+      if (peds.length) nOcup++; nNovos += novos; if (ch) nChama++;
+      const flags = (ch ? `<span class="flag red">${chamTxt(ch)}</span>` : '') + (novos ? `<span class="flag">${novos} pedido${novos > 1 ? 's' : ''} novo${novos > 1 ? 's' : ''}</span>` : '');
+      return `<button class="mesa ${peds.length || ch ? '' : 'livre'} ${novos ? 'novo' : ''} ${ch ? 'chama' : ''}" data-mesa="${m.k}"><span class="mn">${esc(m.nome)}</span>
+        <span class="ms">${peds.length ? `${peds.length} pedido${peds.length > 1 ? 's' : ''} · último ${ha(peds[peds.length - 1].criadoEm)}` : 'Livre'}</span>
+        ${flags ? `<span class="flags">${flags}</span>` : ''}${peds.length ? `<span class="tot">${A.eur(tot)}</span>` : ''}</button>`;
+    }).join('') || `<div class="card vazio" style="grid-column:1/-1">Ainda não há mesas. Crie-as no separador "Mesas e QR".</div>`;
+    $('pedResumo').textContent = ms.length ? `${nOcup} de ${ms.length} mesas com pedidos` + (nChama ? ` · ${nChama} a chamar` : '') + (nNovos ? ` · ${nNovos} pedido${nNovos > 1 ? 's' : ''} por ver` : '') : 'Crie as mesas para começar a receber pedidos.';
+    const b = $('bdg'); b.hidden = !(nNovos + nChama); b.textContent = nNovos + nChama;
+    if (abertaM) renderMesa();
+  }
+  $('mesasGrid').onclick = e => { const b = e.target.closest('[data-mesa]'); if (!b) return; abertaM = b.dataset.mesa; limparArmado = false; renderMesa(); $('shM').classList.add('on'); };
+  const fecharM = () => { $('shM').classList.remove('on'); abertaM = null; limparArmado = false; };
+  $('mFechar').onclick = fecharM; $('shM').onclick = e => { if (e.target.id === 'shM') fecharM(); };
+  addEventListener('keydown', e => { if (e.key === 'Escape') fecharM(); });
+  function renderMesa() {
+    const m = MESAS[abertaM]; if (!m) return fecharM();
+    const c = m.codigo, peds = pedidosDe(c), ch = (CONTAS[c] || {}).chamada, tot = peds.reduce((x, p) => x + A.totalPedido(p, CD), 0);
+    $('mT').textContent = m.nome;
+    $('mCorpo').innerHTML = (ch ? `<div class="chamada"><span><b>${chamTxt(ch)}</b> · ${ha(ch.em)}</span><button class="btn b-sm" data-a="atender">Atendido</button></div>` : '')
+      + (peds.length ? peds.map((p, i) => `<div class="ped ${p.visto ? '' : 'nv'}"><div class="ped-h"><span><b>Pedido ${i + 1}</b> · ${hora(p.criadoEm)} · ${ha(p.criadoEm)}</span>${p.visto ? '<span>Visto</span>' : `<button class="btn b-main b-sm" data-a="visto" data-p="${p.id}">Marcar como visto</button>`}</div>
+          ${Object.entries(p.itens || {}).map(([id, it]) => `<div class="li"><span class="q">${Number(it.q) || 0}×</span><span>${esc(nomeItem(id, it))}</span><span class="v">${A.eur((Number(it.q) || 0) * A.precoDe(id, CD))}</span></div>`).join('')}
+          ${p.nota ? `<div class="nota">${esc(p.nota)}</div>` : ''}</div>`).join('') + `<div class="totb"><span>Total da mesa</span><span>${A.eur(tot)}</span></div>`
+        : `<p class="vazio">Sem pedidos nesta mesa.</p>`)
+      + `<div class="row" style="margin-top:18px;justify-content:space-between">${peds.some(p => !p.visto) ? '<button class="btn b-soft" data-a="tudo">Marcar tudo como visto</button>' : '<span></span>'}
+          ${peds.length || ch ? `<button class="btn ${limparArmado ? 'b-red' : 'b-ink'}" data-a="limpar">${limparArmado ? 'Confirmar: apagar os pedidos desta mesa' : 'Conta paga · limpar mesa'}</button>` : ''}</div>`;
+  }
+  $('mCorpo').onclick = e => {
+    const b = e.target.closest('[data-a]'); if (!b || !MESAS[abertaM]) return; const c = MESAS[abertaM].codigo, a = b.dataset.a;
+    if (a === 'atender') A.db.ref(`contas/${c}/chamada`).remove();
+    else if (a === 'visto') A.db.ref(`contas/${c}/pedidos/${b.dataset.p}/visto`).set(true);
+    else if (a === 'tudo') { const up = {}; pedidosDe(c).forEach(p => { if (!p.visto) up[`pedidos/${p.id}/visto`] = true; }); A.db.ref('contas/' + c).update(up); }
+    else if (a === 'limpar') {
+      if (!limparArmado) { limparArmado = true; renderMesa(); setTimeout(() => { if (limparArmado && abertaM) { limparArmado = false; renderMesa(); } }, 6000); return; }
+      limparArmado = false; A.db.ref('contas/' + c).remove().then(fecharM);
+    }
+  };
+  $('pedAtivos').onchange = e => A.db.ref('cardapio/pedidos').set(e.target.checked);
+  setInterval(() => { if (document.querySelector('#v-pedidos.on')) renderPedidos(); }, 30000);
+
+  // ---------- mesas e QR ----------
   const menuUrl = () => new URL('menu.html', location.href).href.replace(/menu\.html$/, A.DEMO ? 'menu.html' : 'menu');
   const qrSvg = (txt) => { const q = qrcode(0, 'M'); q.addData(txt); q.make(); return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); };
-  function qrBase() { const u = menuUrl(); $('qrUrl').textContent = u; $('qrOne').innerHTML = qrSvg(u); $('qrOne').querySelector('svg').style.cssText = 'width:100%;height:100%'; if (!$('qrPrint').children.length) gerar(); }
-  function gerar() {
-    const n = Math.max(1, Math.min(80, parseInt($('nMesas').value, 10) || 1)), com = $('comMesa').checked, base = menuUrl();
-    $('qrPrint').innerHTML = Array.from({ length: com ? n : 1 }, (_, i) => { const u = com ? base + '?mesa=' + (i + 1) : base; return `<div class="qcard"><div class="n">${esc(R.nome)}</div><div class="t">Veja o nosso cardápio</div><div class="q">${qrSvg(u)}</div>${com ? `<div class="m">Mesa ${i + 1}</div>` : ''}<small>Aponte a câmara do telemóvel</small></div>`; }).join('');
+  const urlMesa = m => menuUrl() + '?mesa=' + encodeURIComponent(m.num) + '&c=' + encodeURIComponent(m.codigo);
+  function qrBase() { const u = menuUrl(); $('qrUrl').textContent = u; $('qrOne').innerHTML = qrSvg(u); $('qrOne').querySelector('svg').style.cssText = 'width:100%;height:100%'; renderMesas(); }
+  function renderMesas() {
+    if (!document.querySelector('#v-qr.on')) return;
+    $('qrPrint').innerHTML = listaMesas().map(m => `<div class="qcard"><div class="n">${esc(R.nome)}</div><div class="t">Cardápio e pedidos</div><div class="q">${qrSvg(urlMesa(m))}</div><div class="m">${esc(m.nome)}</div><small>Aponte a câmara do telemóvel</small>
+      <div class="qacts"><a class="tg" href="${esc(urlMesa(m))}" target="_blank" rel="noopener">Testar</a><button class="tg" data-ren="${m.k}">Mudar nome</button><button class="tg" data-cod="${m.k}">Novo código</button><button class="tg" data-del="${m.k}">Apagar</button></div></div>`).join('')
+      || '<p class="sub" style="grid-column:1/-1">Ainda não há mesas. Escolha quantas quer e carregue em "Adicionar mesas".</p>';
   }
-  $('qrGerar').onclick = gerar; $('qrPrint1').onclick = () => { if (!$('qrPrint').children.length) gerar(); window.print(); };
+  $('mAdd').onclick = () => {
+    const n = Math.max(1, Math.min(50, parseInt($('nNovas').value, 10) || 1)); let num = listaMesas().reduce((x, m) => Math.max(x, m.num || 0), 0); const up = {};
+    for (let i = 0; i < n; i++) { num++; const k = A.db.ref('mesas').push().key, c = A.gerarCodigo(), nome = 'Mesa ' + num; up['mesas/' + k] = { num, nome, codigo: c }; up['codigos/' + c] = { mesa: k, nome }; }
+    if (CD.pedidos === undefined) up['cardapio/pedidos'] = true;
+    A.db.ref().update(up);
+  };
+  $('qrPrint').onclick = e => {
+    const b = e.target.closest('button'); if (!b) return; const k = b.dataset.ren || b.dataset.cod || b.dataset.del, m = MESAS[k]; if (!m) return;
+    if (b.dataset.ren) { const n = prompt('Nome da mesa (ex.: Mesa 12, Esplanada 3)', m.nome); if (n && n.trim()) A.db.ref().update({ ['mesas/' + k + '/nome']: n.trim().slice(0, 40), ['codigos/' + m.codigo + '/nome']: n.trim().slice(0, 40) }); }
+    else if (b.dataset.cod) {
+      if (!confirm(`Criar um código novo para a ${m.nome}? O QR antigo deixa de funcionar e é preciso imprimir o cartão desta mesa outra vez. Use isto se alguém estiver a fazer pedidos que não são da mesa.`)) return;
+      const c = A.gerarCodigo(); A.db.ref().update({ ['mesas/' + k + '/codigo']: c, ['codigos/' + m.codigo]: null, ['codigos/' + c]: { mesa: k, nome: m.nome }, ['contas/' + m.codigo]: null, ['contas/' + c]: CONTAS[m.codigo] || null });
+    }
+    else if (b.dataset.del) { if (confirm(`Apagar a ${m.nome} e os pedidos que tiver?`)) A.db.ref().update({ ['mesas/' + k]: null, ['codigos/' + m.codigo]: null, ['contas/' + m.codigo]: null }); }
+  };
+  $('qrPrint1').onclick = () => { renderMesas(); window.print(); };
   $('qrCopy').onclick = () => { navigator.clipboard && navigator.clipboard.writeText(menuUrl()).then(() => { $('qrCopy').textContent = 'Copiado ✓'; setTimeout(() => $('qrCopy').textContent = 'Copiar endereço', 1500); }); };
   $('qrPng').onclick = () => {
     const q = qrcode(0, 'M'); q.addData(menuUrl()); q.make(); const n = q.getModuleCount(), cell = 24, m = 4 * cell, c = document.createElement('canvas'); c.width = c.height = n * cell + m * 2;
