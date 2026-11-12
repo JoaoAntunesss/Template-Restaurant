@@ -18,3 +18,7 @@ Site + **cardápio digital em forma de livro** + painel do dono, para restaurant
 Instalação e personalização: ver [LEIA-ME.md](LEIA-ME.md).
 
 Bibliotecas incluídas: [StPageFlip](https://github.com/Nodlik/StPageFlip) 2.0.7 (MIT) e [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) 1.4.4 (MIT).
+
+## Licença
+
+© 2026 João Antunes (AW). Todos os direitos reservados. O código está público para consulta e demonstração; não pode ser copiado, alterado nem usado noutros sites sem autorização escrita.
